@@ -24,10 +24,10 @@ module ALU32bit(
     input [31:0] OperandA,
     input [31:0] OperandB,
     input [3:0] ALUsel,
-    output [31:0] ALUResult,
-    output [0:0] Overflow,
-    output [0:0] Equal,
-    output [0:0] Carry
+    output wire [31:0] ALUResult,
+    output wire Overflow,
+    output wire Equal,
+    output wire Carry
     );
     
     reg [31:0] ALUout;
