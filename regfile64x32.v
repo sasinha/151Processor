@@ -26,10 +26,9 @@ module regfile64x32(
     input [5:0] WA,
     input [31:0] WD,
     output [31:0] RD1,
-    output [32:0] RD2,
+    output [31:0] RD2,
     input clk,
-    input reset,
-    input write
+    input WE1
     );
     
     reg[31:0] rf[63:0];
@@ -38,14 +37,14 @@ module regfile64x32(
     assign RD2 = rf[RA2];
     
     integer i;
-    always @(posedge clk) begin
-        if(reset) begin
-            for (i = 0; i < 64; i = i + 1) begin
-                rf[i] <= 0;
-            end
-        end else begin
-            if (write) rf[WA] <= WD;
+    initial begin
+        for (i = 0; i < 64; i = i + 1) begin
+            rf[i] <= 0;
         end
+    end
+
+    always @(posedge clk) begin
+        if (WE1) rf[WA] <= WD;
     end
     
 endmodule

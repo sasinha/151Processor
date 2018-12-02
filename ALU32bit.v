@@ -24,14 +24,14 @@ module ALU32bit(
     input [31:0] OperandA,
     input [31:0] OperandB,
     input [3:0] ALUsel,
-    output [31:0] ALUresult,
+    output [31:0] ALUResult,
     output [0:0] Overflow,
     output [0:0] Equal,
     output [0:0] Carry
     );
     
     reg [31:0] ALUout;
-    assign ALUresult = ALUout;
+    assign ALUResult = ALUout;
     
     always @(*)
     begin 

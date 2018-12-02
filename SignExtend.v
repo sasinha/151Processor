@@ -22,7 +22,6 @@
 
 module SignExtend(
     input [14:0] imm,
-    input clk,
     output [31:0] extimm
     );
     
@@ -30,7 +29,7 @@ module SignExtend(
     
     assign extimm = extended;
     
-    always@(posedge clk) begin
+    always@(*) begin
         extended[31:0] <= { { 15{imm[14]}}, imm[14:0] };
     end
     
