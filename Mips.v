@@ -8,12 +8,7 @@
 `include "MUX1.v"
 
 module Mips(
-	input clk,
-	output wire Overflow,
-	output wire Equal,
-	output wire Carry,
-	output wire [31:0] Result,
-	output wire [5:0] InstructionNum
+	input clk
 	);
 
 	wire [5:0] pcOut;
@@ -94,6 +89,6 @@ module Mips(
 		.Equal(eq),
 		.Carry(car)
 	);
-	
+
 
 endmodule

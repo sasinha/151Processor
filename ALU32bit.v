@@ -32,20 +32,25 @@ module ALU32bit(
     
     reg [31:0] ALUout;
     assign ALUResult = ALUout;
+    reg [31:0] negOperandB;
     
     always @(*)
     begin 
-        if (OperandA == OperandB) begin
-            Equal = 1'd1;
-        end
+        Overflow = 0;
+        Equal = 0;
+        Carry = 0;
+
+        if (OperandA == OperandB) Equal = 1;
+
+        negOperandB = ~OperandB + 1;
 
         case(ALUsel)
         4'b0000:
             ALUout = ALUout;
         4'b0001:
-            ALUout = OperandA + OperandB;
+            {Carry, ALUout} = OperandA + OperandB;
         4'b0010:
-            ALUout = OperandA - OperandB;
+            ALUout = OperandA + negOperandB;
         4'b0101:
             ALUout = OperandA & OperandB;
         4'b0110:
@@ -55,11 +60,15 @@ module ALU32bit(
         4'b1000:
             ALUout = OperandA ^ OperandB;
         4'b1001:
-            ALUout = OperandA << OperandB;
+            {Overflow, ALUout} = OperandA << OperandB;
         4'b1011:
             ALUout = OperandB;
         default:
             ALUout = OperandA + OperandB;
         endcase
+
+        if (ALUsel == 4'b0001 && OperandA[31] == OperandB[31] && OperandA[31] != ALUout[31]) Overflow = 1;
+        if (ALUsel == 4'b0010 && OperandA[31] == negOperandB[31] && OperandA[31] != ALUout[31]) Overflow = 1;
+        if (ALUsel == 4'b0010 && OperandA < OperandB) Carry = 1;
     end
 endmodule

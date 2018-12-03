@@ -24,6 +24,12 @@ module Controller(
 				RT = RS[5:0];
 				RS = RD[5:0];
 			end
+		end else begin
+			// NOP
+			MUXsel1 = 0;
+			RS = 6'd63;
+			ALUopsel = 4'b0001;
+			RT = 6'd63;
 		end
 	end
 
