@@ -8,7 +8,7 @@ module ProgramCounter(
 		outCount = 0;
 	end
 
-	always @(posedge clk && count < 26) 
+	always @(posedge clk && count <= 26) 
 	begin
 		outCount = count;
 	end

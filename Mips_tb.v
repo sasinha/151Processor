@@ -7,6 +7,7 @@ module Mips_tb;
 	wire Overflow;
 	wire Equal;
 	wire Carry;
+	wire RegDest[5:0];
 
 	Mips mips(
 		.clk(clk),
@@ -18,18 +19,10 @@ module Mips_tb;
 	);
 	
 	initial begin
+		$dumpfile("mips_tb.vcd");
+   		$dumpvars(0,mips);
 		clk = 0;
 		forever #10 clk = ~clk;
 	end
-
-	always@(*) begin
-		$display("Instruction #%d", InstructionNum);
-		$display("ALUResult: %h", Result);
-		$display("Overflow: %d", Overflow);
-		$display("Equal: %d", Equal);
-		$display("Carry: %d", Carry);
-		#20;
-	end
-
 
 endmodule

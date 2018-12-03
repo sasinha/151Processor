@@ -25,9 +25,9 @@ module ALU32bit(
     input [31:0] OperandB,
     input [3:0] ALUsel,
     output wire [31:0] ALUResult,
-    output wire Overflow,
-    output wire Equal,
-    output wire Carry
+    output reg Overflow,
+    output reg Equal,
+    output reg Carry
     );
     
     reg [31:0] ALUout;
@@ -35,6 +35,10 @@ module ALU32bit(
     
     always @(*)
     begin 
+        if (OperandA == OperandB) begin
+            Equal = 1'd1;
+        end
+
         case(ALUsel)
         4'b0000:
             ALUout = ALUout;
@@ -51,9 +55,9 @@ module ALU32bit(
         4'b1000:
             ALUout = OperandA ^ OperandB;
         4'b1001:
-            ALUout = OperandA << 1;
+            ALUout = OperandA << OperandB;
         4'b1011:
-            ALUout = OperandA;
+            ALUout = OperandB;
         default:
             ALUout = OperandA + OperandB;
         endcase

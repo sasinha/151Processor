@@ -39,7 +39,7 @@ module Mips(
 	assign Overflow = of;
 	assign Equal = eq;
 	assign Carry = car;
-	assign pcOut = InstructionNum;
+	assign InstructionNum = pcOut;
 
 	ProgramCounter pc(
 		.clk(clk),
@@ -94,22 +94,6 @@ module Mips(
 		.Equal(eq),
 		.Carry(car)
 	);
-
-	always@(*) begin
-		// $display("rs: %d", rs);
-		// $display("rt: %d", rt);
-		// $display("rd: %d", rd);
-		// $display("WE1: %d", WE1);
-		// $display("RD1: %h", RD1);
-		// $display("RD2: %h", RD2);
-		$display("Instruction #%d", pcOut);
-		$display("Instruction: %b", imRead);
-		$display("OperandA: %d", RD1);
-		$display("OperandB: %d", extImmediate);
-		$display("ALUResult: %h", ALUResult);
-		$display("Overflow: %d", Overflow);
-		$display("Equal: %d", Equal);
-		$display("Carry: %d", Carry);
-	end
+	
 
 endmodule

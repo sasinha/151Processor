@@ -11,13 +11,20 @@ module Controller(
 
 	always @(*)
 	begin
-		MUXsel1 = Instruction[31:31];
-		RS = Instruction[30:25];
-		RD = Instruction[24:19];
-		ALUopsel = Instruction[18:15];
-		RT = Instruction[14:9];
-		Immediate = Instruction[14:0];
-		RegWrite = 1;
+		RegWrite = 0;
+		if (Instruction != 32'd0) begin
+			RegWrite = 1;
+			MUXsel1 = Instruction[31:31];
+			RS = Instruction[30:25];
+			RD = Instruction[24:19];
+			ALUopsel = Instruction[18:15];
+			RT = Instruction[14:9];
+			Immediate = Instruction[14:0];
+			if (ALUopsel == 4'b1011 || ALUopsel == 4'b1001) begin
+				RT = RS[5:0];
+				RS = RD[5:0];
+			end
+		end
 	end
 
 endmodule
